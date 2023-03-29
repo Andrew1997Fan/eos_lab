@@ -1,4 +1,4 @@
-# Embedded Operation System Lab
+# Embedded Operating System Lab
 Every lab are done under /Linux folder. 
 Here is the cmd to clone the folder.
 ```c
