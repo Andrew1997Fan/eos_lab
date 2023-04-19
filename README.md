@@ -1,7 +1,7 @@
 # Embedded Operating System Lab
 Every lab are done under /Linux folder. 
 Here is the cmd to clone the folder.
-```c
+```c=
 git clone --depth=1 https://github.com/raspberrypi/linux
 ```
 -------------
@@ -15,3 +15,16 @@ git clone --depth=1 https://github.com/raspberrypi/linux
 
 
 -------------
+## lab_05
+1. run 
+```sh=
+sh demo_lab5.sh
+```
+2. sl - display animations install
+```c=
+sudo apt install sl
+```
+3. check if there is any zombie process
+```c=
+ps aux | grep defunct | grep -v grep
+```
