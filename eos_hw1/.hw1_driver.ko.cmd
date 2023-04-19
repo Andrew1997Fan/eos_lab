@@ -1,0 +1,1 @@
+cmd_/home/ee605/eos_ws/lab_02/linux/hw1/hw1_driver.ko := aarch64-linux-gnu-ld -r  -EL  -maarch64elf -z noexecstack   --build-id=sha1  -T scripts/module.lds -o /home/ee605/eos_ws/lab_02/linux/hw1/hw1_driver.ko /home/ee605/eos_ws/lab_02/linux/hw1/hw1_driver.o /home/ee605/eos_ws/lab_02/linux/hw1/hw1_driver.mod.o;  true
