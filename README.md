@@ -4,6 +4,10 @@ Here is the cmd to clone the folder.
 ```c=
 git clone --depth=1 https://github.com/raspberrypi/linux
 ```
+------------
+## lab_02
+1. Shrink your image size by deleting "Security" or "GPIO",careful that *LED shouldn't be closed.
+2. For real-time patch, you need to find the correspond version on internet. 
 -------------
 ## lab_03
 1. All lab_03 files are run under Linux folder. (Provided by Rpi kernel)
