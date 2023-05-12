@@ -32,13 +32,14 @@ void deleteLeading(char *str)
 		str++;
 	}
 }
+
 int passivesock(const char *service, const char *transport, int qlen)
 {
 	struct servent *pse;	/* pointer to service information entry */
 	struct sockaddr_in sin; /* an Internet endpoint address */
 	int s, type;			/* socket descriptor and socket type */
 
-	memset(&sin, 0, sizeof(sin));
+	memset(&sin, 0, sizeof(sin)+1);
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = INADDR_ANY;
 
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
 			memset(opt, 0, BUFSIZE);
 			/*Seperation of Input String*/
 			read(connfd, opt, BUFSIZE);
-			printf("client cmd:%s\n",opt);
+			//printf("client cmd:%s\n",opt);
 			token = strtok(opt, "|");
 			while (token != NULL)
 			{
@@ -158,7 +159,7 @@ int main(int argc, char *argv[])
 			if (strstr(cmd[0], "Menu") != NULL)
 			{
 				sprintf(buff, "1. Search\n2. Report\n3. Exit\n");
-				write(connfd, buff, strlen(buff));
+				write(connfd, buff, 256);
 			}
 			/* Search */
 			else if (strstr(cmd[0], "Search") != NULL)
@@ -183,54 +184,54 @@ int main(int argc, char *argv[])
 					strcat(buff, opt);
 					sprintf(opt, "9. City God Temple : %d\n", City_God_Temple.child + City_God_Temple.adult + City_God_Temple.elder);
 					strcat(buff, opt);
-					write(connfd, buff, strlen(buff));
+					write(connfd, buff, 256);
 				}
 				else if (counter >= 2)
 				{
 					if (strstr(cmd[1], "Baseball") != NULL)
 					{
 						sprintf(buff, "Baseball Stadium - Child : %d Adult : %d Elder : %d\n", Baseball_Stadium.child, Baseball_Stadium.adult, Baseball_Stadium.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "Big") != NULL)
 					{
 						sprintf(buff, "Big City - Child : %d Adult : %d Elder : %d\n", Big_City.child, Big_City.adult, Big_City.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "Neiwan Old Street") != NULL)
 					{
 						sprintf(buff, "Neiwan Old Street - Child : %d Adult : %d Elder : %d\n", Neiwan_Old_Street.child, Neiwan_Old_Street.adult, Neiwan_Old_Street.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "NYCU") != NULL)
 					{
 						sprintf(buff, "NYCU - Child : %d Adult : %d Elder : %d\n", NYCU.child, NYCU.adult, NYCU.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "Smangus") != NULL)
 					{
 						sprintf(buff, "Smangus - Child : %d Adult : %d Elder : %d\n", Smangus.child, Smangus.adult, Smangus.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "17 km of Splendid Coastline") != NULL)
 					{
 						sprintf(buff, "17 km of Splendid Coastline - Child : %d Adult : %d Elder : %d\n", a17_KM_of_Splendid_Coastline.child, a17_KM_of_Splendid_Coastline.adult,a17_KM_of_Splendid_Coastline.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "100 Tastes") != NULL)
 					{
 						sprintf(buff, "100 Tastes - Child : %d Adult : %d Elder : %d\n", a100_Tastes.child, a100_Tastes.adult, a100_Tastes.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "Science Park") !=  NULL)
 					{
 						sprintf(buff, "Science Park - Child : %d Adult : %d Elder : %d\n", Science_Park.child, Science_Park.adult, Science_Park.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 					else if (strstr(cmd[1], "City God Temple") !=  NULL)
 					{
 						sprintf(buff, "City God Temple - Child : %d Adult : %d Elder : %d\n", City_God_Temple.child, City_God_Temple.adult, City_God_Temple.elder);
-						write(connfd, buff, strlen(buff));
+						write(connfd, buff, 256);
 					}
 				}
 			}
@@ -240,6 +241,7 @@ int main(int argc, char *argv[])
 				wait = 0;
 				for (int i = 1; i < counter; i += 2)
 				{
+					if(cmd[i+1][strlen(cmd[i+1])-1]==' ') cmd[i+1][strlen(cmd[i+1])-1]='\0';
 					deleteLeading(cmd[i]);
 					sprintf(buff, "%s|%s\n", cmd[i], cmd[i+1]);
 					if (strstr(cmd[i], "Baseball") != NULL)
@@ -415,14 +417,14 @@ int main(int argc, char *argv[])
 					}
 					strcat(opt, buff);
 				}
-				memset(buff, 0, sizeof(buff));
+				memset(buff, 0, 256);
 				/*Before sending message to client ,sleep*/
 				sprintf(buff, "Please wait a few seconds...\n");
-				write(connfd, buff, strlen(buff));
+				write(connfd, buff, 256);
 				sleep(wait);
 				
 				// return information
-				write(connfd, opt, strlen(opt));				
+				write(connfd, opt, 256);				
 			}
 			/* Exit */
 			else if (strstr(cmd[0], "Exit") != NULL)
@@ -436,10 +438,3 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-/* check string example
-   Big City | Adult 6 | Baseball Stadium | Elder 3
-   Report | Baseball Stadium | Adult 5 | Baseball Stadium | Elder 3
-   Report | NYCU | Adult 1 | Big City | Elder 2 | Science Park | Child 9
-   Report | NYCU | Child 10
-   Search | Baseball Stadium
-   */
