@@ -30,7 +30,7 @@ void *connection_handler(void *socket_desc) {
         } else if (strcmp(operation, "withdraw") == 0) {
             if (balance >= amount) {
                 balance -= amount;
-                sprintf(buffer, "After withdrawa: %d", balance);
+                sprintf(buffer, "After withdraw: %d", balance);
             } else {
                 sprintf(buffer, "Insufficient balance.");
             }
